@@ -6,11 +6,11 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/17 02:51:16 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/20 14:25:34 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cube.h"
+#include "../../includes/cube.h"
 
 void	clear_map(t_map *map)
 {

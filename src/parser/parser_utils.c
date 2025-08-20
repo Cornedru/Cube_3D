@@ -6,30 +6,45 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/17 02:25:25 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/20 15:09:12 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cube.h"
 
-int	check_args(int argc, char **argv)
+int	check_args(int ac, char **av)
 {
-	int	len;
+	int		i;
+	char	*filename;
 
-	if (argc != 2)
+	i = 0;
+	filename = av[1];
+	if (ac != 2)
 		ft_error("Error\nUsage: ./cub3D <map.cub>\n", NULL, NULL);
-	len = ft_strlen(argv[1]);
-	if (len < 4 || ft_strcmp(argv[1] + len - 4, ".cub") != 0)
+	else if (ft_strlen(filename) < 5)
+		ft_error("Filename to short to be suffixed by .cub", NULL, NULL);
+	else if (ft_strcmp(av[1] + i - 4, ".cub"))
 		ft_error("Error\nFile must have .cub extension\n", NULL, NULL);
-	return (1);
+	else
+	{
+		while (av[1][i])
+		{
+			if (av[1][i] == '/')
+				filename = &av[1][i + 1];
+			i++;
+		}
+		if (!ft_strncmp(filename, ".ber", 4))
+			ft_error("file can not be just .ber", NULL, NULL);
+	}
+	return (i);
 }
 
-int	parse_file(char *file, t_game	*game)
+int	parse_file(char *file, t_game *game)
 {
 	int		fd;
 	char	*line;
 
-	(void) game;
+	(void)game;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{

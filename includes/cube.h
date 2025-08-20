@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:45:56 by ndehmej           #+#    #+#             */
-/*   Updated: 2025/08/17 02:50:40 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/20 15:09:45 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,3 +77,6 @@ void				ft_error(char *message, t_map *map, t_game *game);
 void				clear_map(t_map *map);
 void				delete_texture_img(t_game *game);
 void				ft_error(char *message, t_map *map, t_game *game);
+void				check_map(t_map *map);
+void				check_path_closed(t_map *map);
+void	store_map(t_map *map, char **av);

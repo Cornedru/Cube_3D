@@ -6,7 +6,7 @@
 #    By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/25 03:00:00 by oligrien          #+#    #+#              #
-#    Updated: 2025/08/17 02:47:36 by ndehmej          ###   ########.fr        #
+#    Updated: 2025/08/20 15:12:50 by ndehmej          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CC			= cc
 FLAGS		= -Wall -Wextra -Werror
 
 SRCS_DIR    = src/
+UTL_DIR		= utils/
 PRS_DIR     = parser/
 OBJS_DIR    = obj/
 LIBFT_DIR   = libft/
@@ -29,8 +30,12 @@ GC          = $(GC_DIR)/gc.a
 MLXLIB      = $(MLXFOLDER)/build/libmlx42.a
 
 SRCS_FILES  = main.c \
-			$(PRS_DIR)parser_utils.c
-
+			$(UTL_DIR)utils.c \
+			$(PRS_DIR)parser_utils.c \
+			$(PRS_DIR)check_map.c \
+			$(PRS_DIR)check_path.c \
+			$(PRS_DIR)store.c \
+			
 SRCS        = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 OBJS        = $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 
