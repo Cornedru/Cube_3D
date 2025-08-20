@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:45:56 by ndehmej           #+#    #+#             */
-/*   Updated: 2025/08/20 15:09:45 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/20 18:56:00 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,23 @@
 
 
 
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
 
 
 typedef struct s_textures {
-	char *north;
-	char *south;
-	char *west;
-	char *east;	
+	char	*north;
+	char	*south;
+	char	*west;
+	char	*east;
+	t_color	floor;
+	t_color	ceiling;
 }	t_textures;
+
 
 typedef struct s_map
 {
@@ -66,6 +75,7 @@ typedef struct s_game
 	int				p_y;
 	int				p_x;
 	unsigned int	move_count;
+	t_textures		*textures;
 }					t_game;
 
 
@@ -79,4 +89,10 @@ void				delete_texture_img(t_game *game);
 void				ft_error(char *message, t_map *map, t_game *game);
 void				check_map(t_map *map);
 void				check_path_closed(t_map *map);
-void	store_map(t_map *map, char **av);
+void				store_map(t_map *map, t_textures *textures, char **av);
+void				parse_config_line(char *line, t_textures *textures);
+void				parse_color(char *line, t_color *color);
+void				read_config_and_map(const char *file, t_map *map, t_textures *textures);
+void				display_map(t_game *game, t_map *map, int x, int y);
+void				init_textures(t_game *game, t_map *map);
+void				ft_hook(mlx_key_data_t key, void *param);

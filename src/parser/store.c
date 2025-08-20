@@ -5,62 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/20 15:13:47 by ndehmej          ###   ########.fr       */
+/*   Created: 2025/08/20 18:14:05 by ndehmej           #+#    #+#             */
+/*   Updated: 2025/08/20 18:24:28 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cube.h"
 
-static void	add_map_to_struct(char **argv, t_map *map)
+static void	skip_config_lines(int fd, t_textures *textures, t_map *map)
 {
+	char	*line;
 	int		i;
-	int		j;
-	int		fd;
-	char	*gnl;
 
 	i = 0;
-	map->map[i] = NULL;
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		ft_error("File does not exist!", map, NULL);
-	gnl = get_next_line(fd);
-	if (!gnl)
-		return (close(fd), ft_error("File empty!", map, NULL));
-	while (gnl)
+	while (i < 6)
 	{
-		j = 0;
-		while (gnl[j] && gnl[j] != '\n')
-			j++;
-		if (gnl[j] == '\n')
-			gnl[j] = '\0';
-		map->map[i++] = gnl;
-		gnl = get_next_line(fd);
+		line = get_next_line(fd);
+		if (!line)
+			ft_error("Missing configuration lines", map, NULL);
+		if (line[0] != '\n')
+		{
+			parse_config_line(line, textures);
+			i++;
+		}
+		free(line);
 	}
-	map->map[i] = NULL;
-	close(fd);
 }
 
-void	store_map(t_map *map, char **av)
+static void	count_map_lines(int fd, t_map *map)
 {
-	int		fd;
-	char	*gnl;
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (line[0] != '\n')
+			map->y_len++;
+		free(line);
+		line = get_next_line(fd);
+	}
+}
+
+static void	load_map_lines(int fd, t_map *map)
+{
+	char	*line;
+	int		i;
+
+	map->map = malloc(sizeof(char *) * (map->y_len + 1));
+	if (!map->map)
+		ft_error("Malloc failed", map, NULL);
+	i = 0;
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (line[0] != '\n')
+			map->map[i++] = ft_strtrim(line, "\n");
+		free(line);
+		line = get_next_line(fd);
+	}
+	map->map[i] = NULL;
+}
+
+void	store_map(t_map *map, t_textures *textures, char **av)
+{
+	int	fd;
 
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		ft_error("files does not exist", map, NULL);
-	gnl = get_next_line(fd);
-	if (!gnl)
-		return (close(fd), ft_error("File empty", map, NULL));
-	while (gnl)
-	{
-		map->y_len++;
-		free(gnl);
-		gnl = get_next_line(fd);
-	}
+		ft_error("File not found", map, NULL);
+	skip_config_lines(fd, textures, map);
+	count_map_lines(fd, map);
 	close(fd);
-	map->map = malloc(sizeof(char *) * (map->y_len + 1));
-	if (!map->map)
-		ft_error("Memory allocation failed", map, NULL);
-	add_map_to_struct(av, map);
+	fd = open(av[1], O_RDONLY);
+	if (fd < 0)
+		ft_error("File not found", map, NULL);
+	skip_config_lines(fd, textures, map);
+	load_map_lines(fd, map);
+	close(fd);
 }

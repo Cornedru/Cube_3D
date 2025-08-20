@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 09:00:49 by oligrien          #+#    #+#             */
-/*   Updated: 2025/06/29 23:58:20 by oligrien         ###   ########.fr       */
+/*   Updated: 2025/08/20 18:31:34 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 /* ************************************************************************** */
 int		ft_printf(const char *input, ...);
 char	*get_next_line(int fd);
+size_t	ft_arraylen(char **array);
+
 
 #endif

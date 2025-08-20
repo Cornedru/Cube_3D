@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/20 15:09:12 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/21 01:43:56 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_args(int ac, char **av)
 		ft_error("Error\nUsage: ./cub3D <map.cub>\n", NULL, NULL);
 	else if (ft_strlen(filename) < 5)
 		ft_error("Filename to short to be suffixed by .cub", NULL, NULL);
-	else if (ft_strcmp(av[1] + i - 4, ".cub"))
+	else if (!ft_strcmp(av[1] + i - 4, ".cub"))
 		ft_error("Error\nFile must have .cub extension\n", NULL, NULL);
 	else
 	{
@@ -33,8 +33,8 @@ int	check_args(int ac, char **av)
 				filename = &av[1][i + 1];
 			i++;
 		}
-		if (!ft_strncmp(filename, ".ber", 4))
-			ft_error("file can not be just .ber", NULL, NULL);
+		if (!ft_strncmp(filename, ".cub", 4))
+			ft_error("file can not be just .cub", NULL, NULL);
 	}
 	return (i);
 }

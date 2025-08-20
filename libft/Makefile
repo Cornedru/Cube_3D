@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+         #
+#    By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/25 01:44:57 by oligrien          #+#    #+#              #
-#    Updated: 2025/06/29 23:58:34 by oligrien         ###   ########.fr        #
+#    Updated: 2025/08/20 18:39:37 by ndehmej          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ SRCS_DIR = ./src
 OBJS_DIR = ./obj
 
 # Source Files *************************************************************** #
-SRCS_FILES =	ft_isalpha.c \
+SRCS_FILES =	ft_array_len.c \
+				ft_isalpha.c \
 				ft_isdigit.c \
 				ft_isalnum.c \
 				ft_isascii.c \
