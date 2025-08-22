@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/22 02:31:25 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/22 02:34:24 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@ void debug_print_map(t_map *map)
     printf("=== MAP DEBUG ===\n");
     printf("Map dimensions: %d x %d\n", map->x_len, map->y_len);
     printf("Player position: (%d, %d)\n", map->p_x, map->p_y);
-    
     for (int y = 0; y < map->y_len; y++)
     {
         printf("Line %2d [len=%zu]: '", y, ft_strlen(map->map[y]));
         for (int x = 0; map->map[y][x]; x++)
         {
             if (map->map[y][x] == ' ')
-                printf("_");  // Show spaces as underscores
+                printf("_");
             else
                 printf("%c", map->map[y][x]);
         }
@@ -57,7 +56,6 @@ int	main(int argc, char **argv)
 	game.textures = &textures;
 	ft_printf("Map dimensions: %d x %d\n", map.x_len, map.y_len);
 	ft_printf("Player spawn: (%d, %d)\n", game.p_x, game.p_y);
-	
 	game.mlx = mlx_init((map.x_len * 100), (map.y_len * 100), "Cube_3D", false);
 	if (!game.mlx)
 		ft_error("Unable to initialized MLX", &map, &game);

@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/22 02:23:13 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/22 02:41:09 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static char	**copy_map(t_map *map)
 	char	**copy;
 	int		i;
 
-	// Use garbage collector for the copy
 	copy = gc_malloc(sizeof(char *) * (map->y_len + 1));
 	if (!copy)
 		return (NULL);
@@ -61,5 +60,4 @@ void	check_path_closed(t_map *map)
 	if (!map_copy)
 		ft_error("Unable to copy map", map, NULL);
 	flood_fill(map_copy, start_x, start_y, map);
-	// No need to manually free - garbage collector will handle it
 }

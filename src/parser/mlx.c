@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/22 02:30:38 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/22 02:40:42 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	display_map(t_game *game, t_map *map, int x, int y)
 		while (map->map[y][++x] && x < map->x_len)
 		{
 			current_char = map->map[y][x];
-			
-			// Display walls
 			if (current_char == '1')
 			{
 				if (mlx_image_to_window(game->mlx, game->wall, x * 100, y * 100) < 0)
@@ -31,8 +29,6 @@ void	display_map(t_game *game, t_map *map, int x, int y)
 			}
 		}
 	}
-	
-	// Display player at spawn position
 	if (mlx_image_to_window(game->mlx, game->p, map->p_x * 100, map->p_y * 100) < 0)
 		ft_error("Cannot display player", map, game);
 }

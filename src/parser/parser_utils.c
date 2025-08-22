@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/22 02:32:11 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/22 02:41:37 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,19 @@ int	check_args(int ac, char **av)
 		ft_error("Filename too short to be suffixed by .cub", NULL, NULL);
 		return (0);
 	}
-	
-	// Check if the file ends with .cub
 	if (ft_strcmp(filename + len - 4, ".cub") != 0)
 	{
 		ft_error("File must have .cub extension", NULL, NULL);
 		return (0);
 	}
-	
-	// Find the actual filename (after last '/')
 	i = len - 1;
 	while (i >= 0 && filename[i] != '/')
 		i--;
-	
-	// Check if the filename is just ".cub"
 	if (ft_strcmp(filename + i + 1, ".cub") == 0)
 	{
 		ft_error("File cannot be just .cub", NULL, NULL);
 		return (0);
 	}
-	
 	return (1);
 }
 

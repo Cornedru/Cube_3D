@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/22 02:30:48 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/22 02:41:22 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,10 @@ static int	valid_mov(mlx_key_data_t key, t_game *game)
 		x++;
 	else
 		return (0);
-	
-	// Check bounds
 	if (y < 0 || y >= game->map_height || x < 0)
 		return (0);
 	if (!game->map[y] || x >= (int)ft_strlen(game->map[y]))
 		return (0);
-	
-	// Check if it's a wall or space (both invalid for movement)
 	if (game->map[y][x] == '1' || game->map[y][x] == ' ')
 		return (0);
 	
@@ -78,8 +74,6 @@ void	ft_hook(mlx_key_data_t key, void *param)
 			update_pos(key, game);
 			printf("Player moved to: (%d, %d)\n", game->p_x, game->p_y);
 		}
-		
-		// Update player position on screen
 		if (game->p && game->p->count > 0)
 		{
 			game->p->instances[0].x = game->p_x * 100;
