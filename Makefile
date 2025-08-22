@@ -6,7 +6,7 @@
 #    By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/25 03:00:00 by oligrien          #+#    #+#              #
-#    Updated: 2025/08/20 18:57:07 by ndehmej          ###   ########.fr        #
+#    Updated: 2025/08/22 00:17:31 by ndehmej          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ FLAGS		= -Wall -Wextra -Werror -g
 
 SRCS_DIR    = src/
 UTL_DIR		= utils/
+# TXT_DIR		= textures/
 PRS_DIR     = parser/
 OBJS_DIR    = obj/
 LIBFT_DIR   = libft/

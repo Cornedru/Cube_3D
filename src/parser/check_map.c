@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/20 18:48:47 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/22 02:22:51 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,23 @@ void	parse_config_line(char *line, t_textures *textures)
 		ft_error("Invalid config line", NULL, NULL);
 }
 
-// static void	is_rectangle(t_map *map)
-// {
-// 	int	i;
-// 	size_t	len;
+static void	calculate_map_dimensions(t_map *map)
+{
+	int		i;
+	size_t	len;
+	size_t	max_len;
 
-// 	len = ft_strlen(map->map[0]);
-// 	map->x_len = len;
-// 	i = 1;
-// 	while (i < map->y_len)
-// 	{
-// 		if (ft_strlen(map->map[i]) != len)
-// 			ft_error("The map is not rectangular", map, NULL);
-// 		i++;
-// 	}
-// }
+	max_len = 0;
+	i = 0;
+	while (i < map->y_len)
+	{
+		len = ft_strlen(map->map[i]);
+		if (len > max_len)
+			max_len = len;
+		i++;
+	}
+	map->x_len = max_len;
+}
 
 void	check_map(t_map *map)
 {
@@ -101,5 +103,7 @@ void	check_map(t_map *map)
 	map->y_len = 0;
 	while (map->map[map->y_len])
 		map->y_len++;
+	
+	calculate_map_dimensions(map);
 	count_spawn_and_validate_chars(map);
 }

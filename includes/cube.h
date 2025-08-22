@@ -6,12 +6,12 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:45:56 by ndehmej           #+#    #+#             */
-/*   Updated: 2025/08/20 18:56:00 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/22 02:31:00 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #ifndef CUBE_3D_H
-// # define
+#ifndef CUBE_H
+# define CUBE_H
 
 /* includes ***************************************************************** */
 
@@ -30,15 +30,12 @@
 # include <fcntl.h>
 # include "../MLX42/include/MLX42/MLX42.h"
 
-
-
 typedef struct s_color
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_color;
-
 
 typedef struct s_textures {
 	char	*north;
@@ -48,7 +45,6 @@ typedef struct s_textures {
 	t_color	floor;
 	t_color	ceiling;
 }	t_textures;
-
 
 typedef struct s_map
 {
@@ -65,19 +61,16 @@ typedef struct s_map
 typedef struct s_game
 {
 	char			**map;
-	int				c_count;
-	int				exit;
+	int				map_width;
+	int				map_height;
 	mlx_t			*mlx;
 	mlx_image_t		*p;
-	mlx_image_t		*c;
 	mlx_image_t		*wall;
-	mlx_image_t		*door;
 	int				p_y;
 	int				p_x;
 	unsigned int	move_count;
 	t_textures		*textures;
 }					t_game;
-
 
 void				delete_texture_img(t_game *game);
 void				clear_map(t_map *map);
@@ -96,3 +89,5 @@ void				read_config_and_map(const char *file, t_map *map, t_textures *textures);
 void				display_map(t_game *game, t_map *map, int x, int y);
 void				init_textures(t_game *game, t_map *map);
 void				ft_hook(mlx_key_data_t key, void *param);
+
+#endif

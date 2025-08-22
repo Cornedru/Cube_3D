@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/20 15:13:39 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/22 02:23:13 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,20 @@ static char	**copy_map(t_map *map)
 	char	**copy;
 	int		i;
 
-	copy = malloc(sizeof(char *) * (map->y_len + 1));
+	// Use garbage collector for the copy
+	copy = gc_malloc(sizeof(char *) * (map->y_len + 1));
 	if (!copy)
 		return (NULL);
 	i = 0;
 	while (i < map->y_len)
 	{
-		copy[i] = ft_strdup(map->map[i]);
+		copy[i] = gc_strdup(map->map[i]);
 		if (!copy[i])
-		{
-			while (--i >= 0)
-				free(copy[i]);
-			free(copy);
 			return (NULL);
-		}
 		i++;
 	}
 	copy[i] = NULL;
 	return (copy);
-}
-
-static void	free_copy(char **map_copy, int height)
-{
-	int	i;
-
-	i = 0;
-	while (i < height)
-		free(map_copy[i++]);
-	free(map_copy);
 }
 
 static void	flood_fill(char **map, int x, int y, t_map *orig_map)
@@ -75,5 +61,5 @@ void	check_path_closed(t_map *map)
 	if (!map_copy)
 		ft_error("Unable to copy map", map, NULL);
 	flood_fill(map_copy, start_x, start_y, map);
-	free_copy(map_copy, map->y_len);
+	// No need to manually free - garbage collector will handle it
 }

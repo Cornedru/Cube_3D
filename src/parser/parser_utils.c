@@ -6,7 +6,7 @@
 /*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/21 01:43:56 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/22 02:32:11 by ndehmej          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,44 @@
 int	check_args(int ac, char **av)
 {
 	int		i;
+	int		len;
 	char	*filename;
 
-	i = 0;
-	filename = av[1];
 	if (ac != 2)
-		ft_error("Error\nUsage: ./cub3D <map.cub>\n", NULL, NULL);
-	else if (ft_strlen(filename) < 5)
-		ft_error("Filename to short to be suffixed by .cub", NULL, NULL);
-	else if (!ft_strcmp(av[1] + i - 4, ".cub"))
-		ft_error("Error\nFile must have .cub extension\n", NULL, NULL);
-	else
 	{
-		while (av[1][i])
-		{
-			if (av[1][i] == '/')
-				filename = &av[1][i + 1];
-			i++;
-		}
-		if (!ft_strncmp(filename, ".cub", 4))
-			ft_error("file can not be just .cub", NULL, NULL);
+		ft_error("Usage: ./cub3D <map.cub>", NULL, NULL);
+		return (0);
 	}
-	return (i);
+	
+	filename = av[1];
+	len = ft_strlen(filename);
+	
+	if (len < 5)
+	{
+		ft_error("Filename too short to be suffixed by .cub", NULL, NULL);
+		return (0);
+	}
+	
+	// Check if the file ends with .cub
+	if (ft_strcmp(filename + len - 4, ".cub") != 0)
+	{
+		ft_error("File must have .cub extension", NULL, NULL);
+		return (0);
+	}
+	
+	// Find the actual filename (after last '/')
+	i = len - 1;
+	while (i >= 0 && filename[i] != '/')
+		i--;
+	
+	// Check if the filename is just ".cub"
+	if (ft_strcmp(filename + i + 1, ".cub") == 0)
+	{
+		ft_error("File cannot be just .cub", NULL, NULL);
+		return (0);
+	}
+	
+	return (1);
 }
 
 int	parse_file(char *file, t_game *game)
