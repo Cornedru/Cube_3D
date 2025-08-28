@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   store.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:14:05 by ndehmej           #+#    #+#             */
-/*   Updated: 2025/08/22 02:41:43 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/27 23:09:24 by oligrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cube.h"
 
-static void	skip_config_lines(int fd, t_textures *textures, t_map *map)
+static void	skip_config_lines(int fd, t_game *g)
 {
 	char	*line;
 	int		i;
@@ -22,10 +22,10 @@ static void	skip_config_lines(int fd, t_textures *textures, t_map *map)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			ft_error("Missing configuration lines", map, NULL);
+			ft_error("Missing configuration lines", g->map, NULL);
 		if (line[0] != '\n')
 		{
-			parse_config_line(line, textures);
+			parse_config_line(line, g->textures);
 			i++;
 		}
 		free(line);
@@ -71,22 +71,21 @@ static void	load_map_lines(int fd, t_map *map)
 	map->map[i] = NULL;
 }
 
-void	store_map(t_map *map, t_textures *textures, char **av)
+void	store_map(t_game *g, char **av)
 {
 	int	fd;
 
-	ft_memset(textures, 0, sizeof(t_textures));
-	
+	g->textures = gc_malloc(sizeof(t_textures));
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		ft_error("File not found", map, NULL);
-	skip_config_lines(fd, textures, map);
-	count_map_lines(fd, map);
+		ft_error("File not found", g->map, NULL);
+	skip_config_lines(fd, g);
+	count_map_lines(fd, g->map);
 	close(fd);
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		ft_error("File not found", map, NULL);
-	skip_config_lines(fd, textures, map);
-	load_map_lines(fd, map);
+		ft_error("File not found", g->map, NULL);
+	skip_config_lines(fd, g);
+	load_map_lines(fd, g->map);
 	close(fd);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/22 02:22:51 by ndehmej          ###   ########.fr       */
+/*   Updated: 2025/08/28 03:36:36 by oligrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cube.h"
 
-static void	count_spawn_and_validate_chars(t_map *map)
+static void	count_spawn_and_validate_chars(t_game *g)
 {
 	int		spawn_count;
 	char	c;
@@ -20,30 +20,28 @@ static void	count_spawn_and_validate_chars(t_map *map)
 	int		y;
 
 	spawn_count = 0;
-	y = 0;
-	while (y < map->y_len)
+	y = -1;
+	while (++y < g->map->y_len)
 	{
 		x = 0;
-		while (map->map[y][x])
+		while (g->map->map[y][x])
 		{
-			c = map->map[y][x];
+			c = g->map->map[y][x];
 			if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 			{
 				spawn_count++;
-				map->p_x = x;
-				map->p_y = y;
+				init_player_data(g, x, y, c);
 			}
 			else if (c != '0' && c != '1' && c != ' ')
-				ft_error("Invalid character in map", map, NULL);
+				ft_error("Invalid character in map", g->map, NULL);
 			x++;
 		}
-		y++;
 	}
 	if (spawn_count != 1)
-		ft_error("Map must have exactly 1 spawn point (N/S/E/W)", map, NULL);
+		ft_error("Map must have exactly 1 spawn point (N/S/E/W)", g->map, NULL);
 }
 
-void	parse_color(char *line, t_color *color)
+static void	parse_color(char *line, t_color *color)
 {
 	char	**rgb;
 
@@ -96,14 +94,13 @@ static void	calculate_map_dimensions(t_map *map)
 	map->x_len = max_len;
 }
 
-void	check_map(t_map *map)
+void	check_map(t_game *g)
 {
-	if (!map || !map->map || !(*map->map))
-		ft_error("Map not loaded", map, NULL);
-	map->y_len = 0;
-	while (map->map[map->y_len])
-		map->y_len++;
-	
-	calculate_map_dimensions(map);
-	count_spawn_and_validate_chars(map);
+	if (!g->map || !g->map->map || !(*g->map->map))
+		ft_error("Map not loaded", g->map, NULL);
+	g->map->y_len = 0;
+	while (g->map->map[g->map->y_len])
+		g->map->y_len++;
+	calculate_map_dimensions(g->map);
+	count_spawn_and_validate_chars(g);
 }

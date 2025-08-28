@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ndehmej <ndehmej@student.42.fr>            +#+  +:+       +#+         #
+#    By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/25 03:00:00 by oligrien          #+#    #+#              #
-#    Updated: 2025/08/22 00:17:31 by ndehmej          ###   ########.fr        #
+#    Updated: 2025/08/28 03:42:44 by oligrien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ SRCS_DIR    = src/
 UTL_DIR		= utils/
 # TXT_DIR		= textures/
 PRS_DIR     = parser/
+RC_DIR		= raycasting/
+GAME_DIR	= game/
 OBJS_DIR    = obj/
 LIBFT_DIR   = libft/
 GC_DIR      = gc/
@@ -31,13 +33,17 @@ GC          = $(GC_DIR)/gc.a
 MLXLIB      = $(MLXFOLDER)/build/libmlx42.a
 
 SRCS_FILES  = main.c \
-			$(UTL_DIR)utils.c \
-			$(PRS_DIR)parser_utils.c \
+			$(GAME_DIR)game.c \
+			$(GAME_DIR)move.c \
+			$(GAME_DIR)player_init.c \
+			$(RC_DIR)dda.c \
+			$(RC_DIR)raycast.c \
 			$(PRS_DIR)check_map.c \
 			$(PRS_DIR)check_path.c \
-			$(PRS_DIR)store.c \
 			$(PRS_DIR)mlx.c \
-			$(PRS_DIR)move.c \
+			$(PRS_DIR)parser_utils.c \
+			$(PRS_DIR)store.c \
+			$(UTL_DIR)utils.c \
 			
 SRCS        = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 OBJS        = $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
