@@ -1,9 +1,0 @@
-{
-	"makefile.launchConfigurations": [
-		{
-			"cwd": "/home/ndehmej/Desktop/Cube_4D",
-			"binaryPath": "/home/ndehmej/Desktop/Cube_4D/Cube_3D",
-			"binaryArgs": [maps/test.cub]
-		}
-	]
-}
