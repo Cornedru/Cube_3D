@@ -1,7 +1,7 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO textures/bricksx64.png
+SO textures/bricksx64.png
+WE textures/bricksx64.png
+EA textures/bricksx64.png
 F 220,100,0
 C 225,30,0
 1111111111111111111111111

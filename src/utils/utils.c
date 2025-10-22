@@ -6,7 +6,7 @@
 /*   By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/28 03:36:48 by oligrien         ###   ########.fr       */
+/*   Updated: 2025/10/22 04:24:04 by oligrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	clear_map(t_map *map)
 {
-	// No need to manually free if using garbage collector
-	// The gc will handle cleanup when gc_destroy() is called
 	if (map)
 	{
 		map->map = NULL;
@@ -26,26 +24,29 @@ void	clear_map(t_map *map)
 	}
 }
 
-/* void	delete_texture_img(t_game *game)
+void	delete_texture_img(t_game *g)
 {
-	if (!game)
+	if (!g || !g->textures)
 		return ;
-	if (game->p)
-		mlx_delete_image(game->mlx, game->p);
-	if (game->wall)
-		mlx_delete_image(game->mlx, game->wall);
-} */
+	if (g->textures->north)
+		mlx_delete_image(g->mlx, g->textures->north);
+	if (g->textures->south)
+		mlx_delete_image(g->mlx, g->textures->south);
+	if (g->textures->east)
+		mlx_delete_image(g->mlx, g->textures->east);
+	if (g->textures->west)
+		mlx_delete_image(g->mlx, g->textures->west);
+}
 
 void	ft_error(char *message, t_map *map, t_game *game)
 {
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(message, 2);
 	ft_putstr_fd("\n", 2);
-	// delete_texture_img(game);
+	delete_texture_img(game);
 	clear_map(map);
 	if (game && game->mlx)
 		mlx_terminate(game->mlx);
-	// Clean up all garbage collector allocations
 	gc_destroy();
 	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 21:51:24 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/28 03:36:36 by oligrien         ###   ########.fr       */
+/*   Updated: 2025/08/30 00:04:28 by oligrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,20 @@ static void	parse_color(char *line, t_color *color)
 	gc_free_array((void **)rgb);
 }
 
-void	parse_config_line(char *line, t_textures *textures)
+void	parse_config_line(char *line, t_game *g)
 {
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		textures->north = ft_strdup(line + 3);
+		g->map->north = ft_strtrim(ft_strdup(line + 3), "\n");
 	else if (ft_strncmp(line, "SO ", 3) == 0)
-		textures->south = ft_strdup(line + 3);
+		g->map->south = ft_strtrim(ft_strdup(line + 3), "\n");
 	else if (ft_strncmp(line, "WE ", 3) == 0)
-		textures->west = ft_strdup(line + 3);
+		g->map->west = ft_strtrim(ft_strdup(line + 3), "\n");
 	else if (ft_strncmp(line, "EA ", 3) == 0)
-		textures->east = ft_strdup(line + 3);
+		g->map->east = ft_strtrim(ft_strdup(line + 3), "\n");
 	else if (ft_strncmp(line, "F ", 2) == 0)
-		parse_color(line + 2, &textures->floor);
+		parse_color(line + 2, &g->textures->floor);
 	else if (ft_strncmp(line, "C ", 2) == 0)
-		parse_color(line + 2, &textures->ceiling);
+		parse_color(line + 2, &g->textures->ceiling);
 	else
 		ft_error("Invalid config line", NULL, NULL);
 }

@@ -6,13 +6,13 @@
 /*   By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 03:11:01 by oligrien          #+#    #+#             */
-/*   Updated: 2025/08/28 03:22:55 by oligrien         ###   ########.fr       */
+/*   Updated: 2025/10/22 01:55:53 by oligrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cube.h"
 
-static void	rotate_player(t_player *pl, float dir)
+/* static void	rotate_player(t_player *pl, float dir)
 {
 	float	old_dir_x;
 	float	old_plane_x;
@@ -25,6 +25,24 @@ static void	rotate_player(t_player *pl, float dir)
 	old_plane_x = pl->plane_x;
 	pl->plane_x = pl->plane_x * cos(angle) - pl->plane_y * sin(angle);
 	pl->plane_y = old_plane_x * sin(angle) + pl->plane_y * cos(angle);
+} */
+
+static void	rotate_player(t_player *pl, int dir)
+{
+	float	old_dir_x;
+	float	old_plane_x;
+	float	sinus;
+
+	if (dir > 0)
+		sinus = SIN;
+	else
+		sinus = -SIN;
+	old_dir_x = pl->dir_x;
+	pl->dir_x = pl->dir_x * COS - pl->dir_y * sinus;
+	pl->dir_y = old_dir_x * sinus + pl->dir_y * COS;
+	old_plane_x = pl->plane_x;
+	pl->plane_x = pl->plane_x * COS - pl->plane_y * sinus;
+	pl->plane_y = old_plane_x * sinus + pl->plane_y * COS;
 }
 
 static void check_collision(t_game *g, float new_x, float new_y)
@@ -78,8 +96,8 @@ static void	move_player(t_game *g)
 void	update_player_state(t_game *g)
 {
 	if (g->pl->keys.right)
-		rotate_player(g->pl, 1.0);
+		rotate_player(g->pl, 1);
 	if (g->pl->keys.left)
-		rotate_player(g->pl, -1.0);
+		rotate_player(g->pl, -1);
 	move_player(g);
 }

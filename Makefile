@@ -6,7 +6,7 @@
 #    By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/25 03:00:00 by oligrien          #+#    #+#              #
-#    Updated: 2025/08/28 03:42:44 by oligrien         ###   ########.fr        #
+#    Updated: 2025/10/22 01:46:37 by oligrien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS_FILES  = main.c \
 			$(GAME_DIR)game.c \
 			$(GAME_DIR)move.c \
 			$(GAME_DIR)player_init.c \
+			$(GAME_DIR)textures.c \
 			$(RC_DIR)dda.c \
 			$(RC_DIR)raycast.c \
 			$(PRS_DIR)check_map.c \

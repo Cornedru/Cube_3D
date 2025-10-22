@@ -6,7 +6,7 @@
 /*   By: oligrien <oligrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:14:05 by ndehmej           #+#    #+#             */
-/*   Updated: 2025/08/27 23:09:24 by oligrien         ###   ########.fr       */
+/*   Updated: 2025/08/29 22:50:55 by oligrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	skip_config_lines(int fd, t_game *g)
 			ft_error("Missing configuration lines", g->map, NULL);
 		if (line[0] != '\n')
 		{
-			parse_config_line(line, g->textures);
+			parse_config_line(line, g);
 			i++;
 		}
 		free(line);
