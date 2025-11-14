@@ -29,13 +29,13 @@ int	check_args(t_game *g, int ac, char **av)
 	int		len;
 	char	*filename;
 
-	if (ac < 2 || ac > 4)	// FOR EVAL: STRCTLY 2 !!
+	if (ac < 2 || ac > 4)
 		return (ft_error("Usage: ./cub3D <map.cub> [w] [h]", NULL, NULL), 0);
 	filename = av[1];
 	len = ft_strlen(filename);
 	if (len < 5)
-		return (ft_error("Filename too short to be suffixed by .cub", NULL, \
-			NULL), 0);
+		return (ft_error("Filename too short to be suffixed by .cub", NULL,
+				NULL), 0);
 	if (ft_strcmp(filename + len - 4, ".cub") != 0)
 		return (ft_error("File must have .cub extension", NULL, NULL), 0);
 	i = len - 1;
@@ -43,15 +43,12 @@ int	check_args(t_game *g, int ac, char **av)
 		i--;
 	if (ft_strcmp(filename + i + 1, ".cub") == 0)
 		return (ft_error("File cannot be just .cub", NULL, NULL), 0);
-
-	// REMOVE THIS FOR EVALUATION !!
 	if (ft_isnum(av[2]) && ft_isnum(av[3]))
 	{
 		g->res_w = ft_atoi(av[2]);
 		g->res_h = ft_atoi(av[3]);
 		printf("res_w = %d\nres_h = %d\n", g->res_w, g->res_h);
 	}
-
 	return (1);
 }
 

@@ -41,6 +41,7 @@ SRCS_FILES  = main.c \
 			$(RC_DIR)raycast.c \
 			$(PRS_DIR)check_map.c \
 			$(PRS_DIR)check_path.c \
+			$(PRS_DIR)check_surr.c \
 			$(PRS_DIR)parser_utils.c \
 			$(PRS_DIR)store.c \
 			$(UTL_DIR)utils.c \
