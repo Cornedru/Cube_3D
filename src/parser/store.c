@@ -50,6 +50,7 @@ static void	load_map_lines(int fd, t_map *map)
 {
 	char	*line;
 	int		i;
+	char	*trimmed;
 
 	map->map = gc_malloc(sizeof(char *) * (map->y_len + 1));
 	if (!map->map)
@@ -60,7 +61,7 @@ static void	load_map_lines(int fd, t_map *map)
 	{
 		if (line[0] != '\n')
 		{
-			char *trimmed = ft_strtrim(line, "\n");
+			trimmed = ft_strtrim(line, "\n");
 			map->map[i] = gc_strdup(trimmed);
 			free(trimmed);
 			i++;

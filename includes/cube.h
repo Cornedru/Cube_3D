@@ -207,4 +207,10 @@ void	raycast_loop(t_game *g);
 void	init_dda(t_game *g, t_ray *ray);
 void	perform_dda(t_game *g, t_ray *ray);
 
+
+void	check_vertical(t_game *g, int x, int y);
+void	check_horizontal(t_game *g, int x, int y, size_t line_len);
+void	check_edges(t_game *g, int x, int y, size_t line_len);
+void	check_cell_surroundings(t_game *g, int x, int y);
+
 #endif
