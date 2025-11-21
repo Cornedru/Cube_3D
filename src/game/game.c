@@ -66,6 +66,20 @@ int	init_game(t_game *g)
 	printf("texture path west: %s\n", g->map->west);
 	load_textures(g);
 
+	g->ceiling_hex = rgb_to_hexa_color(
+		g->textures->ceiling.r,
+		g->textures->ceiling.g,
+		g->textures->ceiling.b,
+		g->textures->ceiling.a
+	);
+
+	g->floor_hex = rgb_to_hexa_color(
+		g->textures->floor.r,
+		g->textures->floor.g,
+		g->textures->floor.b,
+		g->textures->floor.a
+	);
+
 	if (!(g->img = mlx_new_image(g->mlx, g->res_w, g->res_h)))
 		return (mlx_close_window(g->mlx),
 			ft_error("MLX: Cannot create image", g->map, g), EXIT_FAILURE);

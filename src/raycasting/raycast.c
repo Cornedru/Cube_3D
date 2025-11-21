@@ -18,18 +18,19 @@ static void	draw_floor_ceiling(t_game *g)
 	int	y;
 
 	y = 0;
+
 	while (y < g->res_h / 2)	// Draw the ceiling
 	{
 		x = -1;
 		while (++x < g->res_w)
-			mlx_put_pixel(g->img, x, y, CEILING_COLOR);
+			mlx_put_pixel(g->img, x, y, g->ceiling_hex);
 		y++;
 	}
 	while (y < g->res_h)	// Draw the floor
 	{
 		x = -1;
 		while (++x < g->res_w)
-			mlx_put_pixel(g->img, x, y, FLOOR_COLOR);
+			mlx_put_pixel(g->img, x, y, g->floor_hex);
 		y++;
 	}
 }

@@ -34,13 +34,11 @@
 # define MAX_FOG_DISTANCE 15.0
 # define MIN_BRIGHTNESS 0.2f
 
-# define MOVE_SPEED 0.05
-# define ROT_SPEED 0.05
+# define MOVE_SPEED 0.1
+# define ROT_SPEED 0.1
 # define SIN sin(ROT_SPEED)
 # define COS cos(ROT_SPEED)
 
-# define CEILING_COLOR 0x688898FF	// A grayish blue
-# define FLOOR_COLOR 0x504030FF		// A brownish color
 # define WALL_NS 0xAA2222FF
 # define WALL_EW 0x882222FF
 
@@ -153,6 +151,8 @@ typedef struct s_game
 	t_textures		*textures;
 	int				res_w;
 	int				res_h;
+	int				ceiling_hex;
+	int				floor_hex;
 }	t_game;
 
 
@@ -162,6 +162,12 @@ typedef struct s_game
 //	check_map.c
 void	parse_config_line(char *line, t_game *g);
 void	check_map(t_game *g);
+void	check_vertical(t_game *g, int x, int y);
+void	check_horizontal(t_game *g, int x, int y, size_t line_len);
+void	check_edges(t_game *g, int x, int y, size_t line_len);
+void	check_cell_surroundings(t_game *g, int x, int y);
+
+uint32_t    rgb_to_hexa_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 //	check_path.c
 void	check_path_closed(t_map *map);
@@ -206,11 +212,5 @@ void	raycast_loop(t_game *g);
 //	dda.c
 void	init_dda(t_game *g, t_ray *ray);
 void	perform_dda(t_game *g, t_ray *ray);
-
-
-void	check_vertical(t_game *g, int x, int y);
-void	check_horizontal(t_game *g, int x, int y, size_t line_len);
-void	check_edges(t_game *g, int x, int y, size_t line_len);
-void	check_cell_surroundings(t_game *g, int x, int y);
 
 #endif
