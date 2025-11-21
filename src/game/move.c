@@ -12,21 +12,6 @@
 
 #include "../includes/cube.h"
 
-/* static void	rotate_player(t_player *pl, float dir)
-{
-	float	old_dir_x;
-	float	old_plane_x;
-	float	angle;
-
-	angle = ROT_SPEED * dir;
-	old_dir_x = pl->dir_x;
-	pl->dir_x = pl->dir_x * cos(angle) - pl->dir_y * sin(angle);
-	pl->dir_y = old_dir_x * sin(angle) + pl->dir_y * cos(angle);
-	old_plane_x = pl->plane_x;
-	pl->plane_x = pl->plane_x * cos(angle) - pl->plane_y * sin(angle);
-	pl->plane_y = old_plane_x * sin(angle) + pl->plane_y * cos(angle);
-} */
-
 static void	rotate_player(t_player *pl, int dir)
 {
 	float	old_dir_x;
@@ -45,7 +30,7 @@ static void	rotate_player(t_player *pl, int dir)
 	pl->plane_y = old_plane_x * sinus + pl->plane_y * COS;
 }
 
-static void check_collision(t_game *g, float new_x, float new_y)
+static void	check_collision(t_game *g, float new_x, float new_y)
 {
 	int	map_x;
 	int	map_y;

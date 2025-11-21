@@ -54,7 +54,7 @@ void	ft_error(char *message, t_map *map, t_game *game)
 bool	is_oob(t_game *g, int map_x, int map_y)
 {
 	return (!(map_x >= 0 && map_x < g->map->x_len && map_y >= 0
-		&& map_y < g->map->y_len));
+			&& map_y < g->map->y_len));
 }
 
 void	init_player_data(t_game *g, int x, int y, char c)

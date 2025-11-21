@@ -23,11 +23,11 @@ static void	game_loop(void *param)
 	raycast_loop(g);
 }
 
-static void key_hook(mlx_key_data_t key, void *param)
+static void	key_hook(mlx_key_data_t key, void *param)
 {
 	t_game	*g;
 	bool	is_pressed;
-	
+
 	g = param;
 	if (!g)
 		return ;
@@ -48,55 +48,31 @@ static void key_hook(mlx_key_data_t key, void *param)
 			g->pl->keys.right = is_pressed;
 	}
 	if (key.key == MLX_KEY_ESCAPE && key.action == MLX_PRESS)
-			mlx_close_window(g->mlx);
+		mlx_close_window(g->mlx);
 }
 
 int	init_game(t_game *g)
 {
-	// Initialize graphics ------------
 	g->mlx = mlx_init(g->res_w, g->res_h, "Cub3D", false);
 	if (!g->mlx)
 		return (ft_error("MLX: Unable to initialize", g->map, g), EXIT_FAILURE);
-
-
-	// Load textures ------------------
-	printf("texture path north: %s\n", g->map->north);
-	printf("texture path south: %s\n", g->map->south);
-	printf("texture path east: %s\n", g->map->east);
-	printf("texture path west: %s\n", g->map->west);
 	load_textures(g);
-
-	g->ceiling_hex = rgb_to_hexa_color(
-		g->textures->ceiling.r,
-		g->textures->ceiling.g,
-		g->textures->ceiling.b,
-		g->textures->ceiling.a
-	);
-
-	g->floor_hex = rgb_to_hexa_color(
-		g->textures->floor.r,
-		g->textures->floor.g,
-		g->textures->floor.b,
-		g->textures->floor.a
-	);
-
-	if (!(g->img = mlx_new_image(g->mlx, g->res_w, g->res_h)))
-		return (mlx_close_window(g->mlx),
-			ft_error("MLX: Cannot create image", g->map, g), EXIT_FAILURE);
+	g->ceiling_hex = rgb_to_hexa_color(g->textures->ceiling.r,
+			g->textures->ceiling.g, g->textures->ceiling.b,
+			g->textures->ceiling.a);
+	g->floor_hex = rgb_to_hexa_color(g->textures->floor.r, g->textures->floor.g,
+			g->textures->floor.b, g->textures->floor.a);
+	g->img = mlx_new_image(g->mlx, g->res_w, g->res_h);
+	if (!(g->img))
+		return (mlx_close_window(g->mlx), ft_error("MLX: Cannot create image",
+				g->map, g), EXIT_FAILURE);
 	if (mlx_image_to_window(g->mlx, g->img, 0, 0) == -1)
-		return (mlx_close_window(g->mlx),
-			ft_error("MLX: Cannot display image", g->map, g), EXIT_FAILURE);
-
-
-	// Start game ---------------------
+		return (mlx_close_window(g->mlx), ft_error("MLX: Cannot display image",
+				g->map, g), EXIT_FAILURE);
 	mlx_loop_hook(g->mlx, &game_loop, g);
 	mlx_key_hook(g->mlx, &key_hook, g);
 	mlx_loop(g->mlx);
-
-
-	// End game -----------------------
 	mlx_delete_image(g->mlx, g->img);
-	// Delete textures here
 	mlx_terminate(g->mlx);
 	return (EXIT_SUCCESS);
 }

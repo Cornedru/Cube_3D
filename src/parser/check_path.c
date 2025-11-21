@@ -12,61 +12,74 @@
 
 #include "../../includes/cube.h"
 
-static char	**copy_map(t_map *map)
+static bool	flood_fill(t_map *map, int y, int x, char **visited)
 {
-	char	**copy;
+	if (y < 0 || y >= map->y_len || x < 0 || x >= map->x_len)
+		return (false);
+	if (visited[y][x])
+		return (true);
+	if (map->map[y][x] == ' ')
+		return (false);
+	if (map->map[y][x] == '1')
+		return (true);
+	visited[y][x] = 1;
+	if (!flood_fill(map, y - 1, x, visited))
+		return (false);
+	if (!flood_fill(map, y + 1, x, visited))
+		return (false);
+	if (!flood_fill(map, y, x - 1, visited))
+		return (false);
+	if (!flood_fill(map, y, x + 1, visited))
+		return (false);
+	return (true);
+}
+
+static char	**init_visited(t_map *map)
+{
+	char	**visited;
 	int		i;
 
-	copy = gc_malloc(sizeof(char *) * (map->y_len + 1));
-	if (!copy)
+	visited = gc_malloc(sizeof(char *) * map->y_len);
+	if (!visited)
 		return (NULL);
 	i = 0;
 	while (i < map->y_len)
 	{
-		copy[i] = gc_strdup(map->map[i]);
-		if (!copy[i])
+		visited[i] = gc_malloc(sizeof(char) * map->x_len);
+		if (!visited[i])
 			return (NULL);
+		ft_memset(visited[i], 0, map->x_len);
 		i++;
 	}
-	copy[i] = NULL;
-	return (copy);
-}
-
-static void	flood_fill(char **map, int x, int y, t_map *orig_map)
-{
-	size_t	line_len;
-
-	if (y < 0 || y >= orig_map->y_len)
-		ft_error("Map is not closed: out of bounds (Y)", orig_map, NULL);
-	if (x < 0)
-		ft_error("Map is not closed: out of bounds (X < 0)", orig_map, NULL);
-	line_len = ft_strlen(map[y]);
-	if (x >= (int)line_len)
-		ft_error("Map is not closed: reached end of line (space)", orig_map,
-			NULL);
-	if (map[y][x] == ' ' || map[y][x] == '\0')
-		ft_error("Map is not closed: found space", orig_map, NULL);
-	if (map[y][x] == '1' || map[y][x] == 'F')
-		return ;
-	map[y][x] = 'F';
-	flood_fill(map, x + 1, y, orig_map);
-	flood_fill(map, x - 1, y, orig_map);
-	flood_fill(map, x, y + 1, orig_map);
-	flood_fill(map, x, y - 1, orig_map);
+	return (visited);
 }
 
 void	check_path_closed(t_map *map)
 {
-	char	**map_copy;
-	int		start_x;
-	int		start_y;
+	char	**visited;
+	int		y;
+	int		x;
 
-	start_x = map->p_x;
-	start_y = map->p_y;
-	map_copy = copy_map(map);
-	if (!map_copy)
-		ft_error("Unable to copy map", map, NULL);
-	flood_fill(map_copy, start_x, start_y, map);
+	visited = init_visited(map);
+	if (!visited)
+		ft_error("Failed to allocate visited map", map, NULL);
+	y = 0;
+	while (y < map->y_len)
+	{
+		x = 0;
+		while (x < map->x_len)
+		{
+			if (!visited[y][x] && (map->map[y][x] == '0'
+					|| map->map[y][x] == 'N' || map->map[y][x] == 'S'
+					|| map->map[y][x] == 'E' || map->map[y][x] == 'W'))
+			{
+				if (!flood_fill(map, y, x, visited))
+					ft_error("Map is not closed", map, NULL);
+			}
+			x++;
+		}
+		y++;
+	}
 }
 
 static void	parse_color(char *line, t_color *color)

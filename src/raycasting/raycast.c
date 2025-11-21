@@ -18,15 +18,14 @@ static void	draw_floor_ceiling(t_game *g)
 	int	y;
 
 	y = 0;
-
-	while (y < g->res_h / 2)	// Draw the ceiling
+	while (y < g->res_h / 2)
 	{
 		x = -1;
 		while (++x < g->res_w)
 			mlx_put_pixel(g->img, x, y, g->ceiling_hex);
 		y++;
 	}
-	while (y < g->res_h)	// Draw the floor
+	while (y < g->res_h)
 	{
 		x = -1;
 		while (++x < g->res_w)
@@ -73,39 +72,27 @@ static void	draw_slice(t_game *g, t_ray *ray, int x)
 
 void	raycast_loop(t_game *g)
 {
-	t_ray		ray;
-	int			x;
+	t_ray	ray;
+	int		x;
 
 	draw_floor_ceiling(g);
 	x = -1;
 	while (++x < g->res_w)
 	{
-		// DDA ------------------------
 		set_ray_dir(g, &ray, x);
 		init_dda(g, &ray);
 		perform_dda(g, &ray);
 		calc_dist(g, &ray);
-
-		// Textures -------------------
 		g->textures->sel = select_texture(g, &ray);
-
-		//	Calculate exact hit point on the wall
 		if (ray.side == 0)
-		    ray.wall_x = g->pl->pos_y + ray.perp_wall_dist * ray.dir_y;
+			ray.wall_x = g->pl->pos_y + ray.perp_wall_dist * ray.dir_y;
 		else
-		    ray.wall_x = g->pl->pos_x + ray.perp_wall_dist * ray.dir_x;
-
-		//	We only need the fractional part of this value (e.g., if wall_x is 7.3, we want 0.3)
+			ray.wall_x = g->pl->pos_x + ray.perp_wall_dist * ray.dir_x;
 		ray.wall_x -= floor(ray.wall_x);
-
-		//	Map pixels & flip if needed to avoid mirrored textures
 		ray.tex_x = (int)(ray.wall_x * (double)g->textures->sel->width);
-		if ((ray.side == 0 && ray.dir_x < 0)
-			|| (ray.side == 1 && ray.dir_y > 0))
-		    ray.tex_x = g->textures->sel->width - ray.tex_x - 1;
-
-
-		// Draw -----------------------
+		if ((ray.side == 0 && ray.dir_x < 0) || (ray.side == 1
+				&& ray.dir_y > 0))
+			ray.tex_x = g->textures->sel->width - ray.tex_x - 1;
 		draw_slice(g, &ray, x);
 	}
 }

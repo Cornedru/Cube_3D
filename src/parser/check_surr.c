@@ -16,7 +16,7 @@ void	check_vertical(t_game *g, int x, int y)
 {
 	if (y > 0)
 	{
-		if (x >= (int)ft_strlen(g->map->map[y - 1])
+		if (x >= (int)ft_strlen(g->map->map[y])
 			|| g->map->map[y - 1][x] == ' ')
 			ft_error("Map not closed: space above playable area", g->map, NULL);
 	}
