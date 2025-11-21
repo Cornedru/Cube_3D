@@ -79,6 +79,7 @@ static void	parse_color(char *line, t_color *color)
 	color->r = ft_atoi(rgb[0]);
 	color->g = ft_atoi(rgb[1]);
 	color->b = ft_atoi(rgb[2]);
+	color->a = 255;
 	if (color->r < 0 || color->r > 255 || color->g < 0 || color->g > 255
 		|| color->b < 0 || color->b > 255)
 		ft_error("RGB values must be between 0 and 255", NULL, NULL);

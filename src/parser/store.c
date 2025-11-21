@@ -90,3 +90,11 @@ void	store_map(t_game *g, char **av)
 	load_map_lines(fd, g->map);
 	close(fd);
 }
+
+uint32_t	rgb_to_hexa_color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+	uint32_t	hexa_color;
+
+	hexa_color = (uint32_t)(r << 24) | (g << 16) | (b << 8) | a;
+	return (hexa_color);
+}
